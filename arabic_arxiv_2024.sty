@@ -1,0 +1,385 @@
+% Arabic Arxiv 2023 Style File
+% Adapted for Arabic Language with XeLaTeX/LuaLaTeX
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{arabic_arxiv_2024}
+
+% \usepackage[verbose=true,letterpaper]{geometry}
+\RequirePackage{algorithm}
+\RequirePackage{algpseudocode}
+\usepackage{amsthm, amssymb, amsmath}
+% Figure and Table Styling
+\RequirePackage{caption}
+\RequirePackage{graphicx}
+% حزمة لإدراج أسماء المؤلفين في المقالة
+\RequirePackage{authblk}
+
+\renewcommand\Authands{ و }
+\renewcommand\Authfont{\scshape\small}
+\renewcommand\Affilfont{\small}
+
+% لضبط هوامش الصفحة، يرجى عدم تغيير هذا الإعداد.
+\RequirePackage[top=25mm, bottom=25.4mm, left=16mm, right=16mm,headheight=20mm,headsep=-0.5cm, a4paper]{geometry}
+
+\captionsetup{
+  font=small,
+  labelfont=bf,
+  tableposition=top
+}
+
+% Fonts and Text Formatting for XeLaTeX/LuaLaTeX
+\RequirePackage{fontspec}
+\RequirePackage{polyglossia}
+\setmainlanguage[numerals=maghrib]{arabic}
+\setotherlanguage{english}
+
+\newfontfamily\arabicfont[Script=Arabic,AutoFakeSlant=-0.02]{ScheherazadeNew-Regular.ttf}
+\setmonofont{ScheherazadeNew-Regular.ttf}
+\let\arabicfonttt\ttfamily
+
+\newcommand{\@arabxivordinal}{1st}
+\newcommand{\@arabxivyear}{2024}
+
+
+
+% الشكر والتقدير
+\usepackage{environ}
+\newcommand{\acksection}{\section{الشكر والتقدير}}
+\NewEnviron{ack}{%
+  \acksection
+  \BODY
+}
+
+% تعيين هندسة الصفحة
+
+\AtBeginDocument{
+  \newgeometry{
+    textheight=9in, % ارتفاع النص
+    textwidth=5.5in, % عرض النص
+    top=1in, % الهامش العلوي
+    headheight=12pt, % ارتفاع رأس الصفحة
+    headsep=25pt, % المسافة بين رأس الصفحة والنص
+    footskip=30pt % المسافة بين تذييل الصفحة والنص
+  }
+}
+
+\widowpenalty=10000 % عقوبة الأرملة
+\clubpenalty=10000 % عقوبة النادي
+\flushbottom % محاذاة الأسفل
+\sloppy % مرن
+
+% Adjusted font sizes with increased leading for better readability in Arabic
+\renewcommand{\normalsize}{%
+  \@setfontsize\normalsize{12}{14} % Increased base font size and leading
+  \abovedisplayskip      10\p@ \@plus 2\p@ \@minus 5\p@
+  \abovedisplayshortskip 5\p@ \@plus 3\p@
+  \belowdisplayskip      \abovedisplayskip
+  \belowdisplayshortskip 7\p@ \@plus 3\p@ \@minus 3\p@
+}
+\normalsize
+
+\renewcommand{\small}{%
+  \@setfontsize\small{11}{13} % Slightly larger 'small' font size and leading
+  \abovedisplayskip      9\p@ \@plus 1.5\p@ \@minus 4\p@
+  \abovedisplayshortskip 4\p@  \@plus 2\p@
+  \belowdisplayskip      \abovedisplayskip
+  \belowdisplayshortskip 6\p@ \@plus 2\p@   \@minus 2\p@
+}
+
+\renewcommand{\footnotesize}{\@setfontsize\footnotesize{9}{10}}
+\renewcommand{\scriptsize}{\@setfontsize\scriptsize{8}{10}}
+\renewcommand{\tiny}{\@setfontsize\tiny{6}{8}}
+\renewcommand{\large}{\@setfontsize\large{14}{16}}
+\renewcommand{\Large}{\@setfontsize\Large{16}{20}}
+\renewcommand{\LARGE}{\@setfontsize\LARGE{20}{24}}
+\renewcommand{\huge}{\@setfontsize\huge{24}{28}}
+\renewcommand{\Huge}{\@setfontsize\Huge{28}{33}}
+
+% Adjusted sections with less space and right-aligned for Arabic
+% Redefine the section command for numbered sections
+\let\oldsection\section
+\renewcommand{\section}{%
+  \@ifstar{\unnumberedsection}{\numberedsection}%
+}
+
+% Definition for numbered sections
+\newcommand{\numberedsection}[1]{%
+  \oldsection{#1}
+}
+
+% Definition for unnumbered sections
+\newcommand{\unnumberedsection}[1]{%
+  \oldsection*{#1}
+}
+
+\providecommand{\subsection}{}
+\renewcommand{\subsection}{%
+  \@startsection{subsection}{2}{\z@}%
+                {-2.0ex \@plus -0.5ex \@minus -0.2ex}%
+                { 1.5ex \@plus  0.2ex}%
+                {\normalsize\bf\raggedleft} % Right-aligned for Arabic
+}
+
+\providecommand{\subsubsection}{}
+\renewcommand{\subsubsection}{%
+  \@startsection{subsubsection}{3}{\z@}%
+                {-1.5ex \@plus -0.5ex \@minus -0.2ex}%
+                { 0.5ex \@plus  0.2ex}%
+                {\normalsize\bf\raggedleft}%
+}
+\providecommand{\paragraph}{}
+\renewcommand{\paragraph}{%
+  \@startsection{paragraph}{4}{\z@}%
+                {1.5ex \@plus 0.5ex \@minus 0.2ex}%
+                {-1em}%
+                {\normalsize\bf}%
+}
+\providecommand{\subparagraph}{}
+\renewcommand{\subparagraph}{%
+  \@startsection{subparagraph}{5}{\z@}%
+                {1.5ex \@plus 0.5ex \@minus 0.2ex}%
+                {-1em}%
+                {\normalsize\bf}%
+}
+\providecommand{\subsubsubsection}{}
+\renewcommand{\subsubsubsection}{%
+  \vskip5pt{\noindent\normalsize\rm\raggedleft}%
+}
+
+
+
+% float placement
+\renewcommand{\topfraction      }{0.85}
+\renewcommand{\bottomfraction   }{0.4}
+\renewcommand{\textfraction     }{0.1}
+\renewcommand{\floatpagefraction}{0.7}
+
+% Adjusted footnote formatting for Arabic text
+\setlength{\footnotesep }{8\p@} % Increased footnote separation
+\setlength{\skip\footins}{11\p@ \@plus 5\p@ \@minus 3\p@} % Adjusted space above footnotes
+\renewcommand{\footnoterule}{\kern -3pt
+  \makebox[\textwidth][r]{%
+    \rule[0.5ex]{0.5\textwidth}{0.4pt}%
+  }
+  \kern 2.6pt
+}
+\setcounter{footnote}{0}
+
+% Adjusted paragraph formatting for Arabic text
+\setlength{\parindent}{\z@}
+\setlength{\parskip  }{8\p@} % Increased space between paragraphs
+
+% Adjusted list formatting for Arabic text
+\setlength{\topsep       }{5\p@ \@plus 2\p@   \@minus 3\p@} % Adjusted spacing around list items
+\setlength{\partopsep    }{2\p@ \@plus 1\p@   \@minus 1\p@}
+\setlength{\itemsep      }{3\p@ \@plus 1.5\p@ \@minus 1\p@} % Increased space between items
+\setlength{\parsep       }{3\p@ \@plus 1.5\p@ \@minus 1\p@}
+\setlength{\leftmargin   }{3pc}
+\setlength{\leftmargini  }{\leftmargin}
+\setlength{\leftmarginii }{2.5em} % Adjusted nested list margins
+\setlength{\leftmarginiii}{2em}
+\setlength{\leftmarginiv }{1.5em}
+\setlength{\leftmarginv  }{1em}
+\def\@listi  {\leftmargin\leftmargini}
+\def\@listii {\leftmargin\leftmarginii
+              \labelwidth\leftmarginii
+              \advance\labelwidth-\labelsep
+              \topsep  3\p@ \@plus 1.5\p@    \@minus 1\p@
+              \parsep  2\p@ \@plus 1\p@ \@minus 1\p@
+              \itemsep \parsep}
+\def\@listiii{\leftmargin\leftmarginiii
+              \labelwidth\leftmarginiii
+              \advance\labelwidth-\labelsep
+              \topsep    2\p@ \@plus 1\p@ \@minus 1\p@
+              \parsep    \z@
+              \partopsep 1\p@ \@plus 0.5\p@ \@minus 1\p@
+              \itemsep \topsep}
+\def\@listiv {\leftmargin\leftmarginiv
+              \labelwidth\leftmarginiv
+              \advance\labelwidth-\labelsep}
+\def\@listv  {\leftmargin\leftmarginv
+              \labelwidth\leftmarginv
+              \advance\labelwidth-\labelsep}
+\def\@listvi {\leftmargin\leftmarginvi
+              \labelwidth\leftmarginvi
+              \advance\labelwidth-\labelsep}
+
+% Command to hold the translator's name
+\def\translatorname{}
+
+% New command to define the translator
+\newcommand{\translator}[1]{\def\translatorname{#1}}
+
+
+% Redefine maketitle to include translator
+\providecommand{\maketitle}{}
+\renewcommand{\maketitle}{%
+  \par
+  \begingroup
+    \renewcommand{\thefootnote}{\fnsymbol{footnote}}
+    \renewcommand{\@makefnmark}{\hbox to \z@{\hss $^{\@thefnmark}$}}
+    \long\def\@makefntext##1{%
+      \parindent 1em\noindent
+      \hbox to 1.8em{\hss $^{\@thefnmark}\m@th$}##1
+    }
+
+    \thispagestyle{empty}
+    \@maketitle
+    \@thanks
+    \@notice
+
+    % Include translator if defined
+    \ifx\translatorname\empty\else
+      \vspace{-30pt}
+      \begin{center}
+        \textbf{\textarabic{المترجم:}} \translatorname
+      \end{center}
+    \fi
+  \endgroup
+  \let\maketitle\relax
+  \let\thanks\relax
+}
+
+% Rules for title box at top of first page - Arabic Style
+% Revised title box commands with triangle pattern
+% Commands for decorative lines in Arabic style
+% Commands for decorative lines in Arabic style
+\newcommand{\@bottomtitlebar}{
+  \vskip 0.29in
+  \vskip -\parskip
+  \hrule height 1\p@
+  \vskip 0.09in%
+}
+
+% إنشاء العنوان (يشمل النسخ المجهولة وغير المجهولة)
+% إنشاء العنوان 
+\providecommand{\@maketitle}{}
+\renewcommand{\@maketitle}{%
+  \vbox{%
+    \hsize\textwidth
+    \linewidth\hsize
+    \vskip 0.1in
+    \@bottomtitlebar
+    \centering
+    {\LARGE\bf \@title\par}
+    \@bottomtitlebar
+    \def\And{%
+      \end{tabular}\hfil\linebreak[0]\hfil%
+      \begin{tabular}[t]{c}\bf\rule{\z@}{24\p@}\ignorespaces%
+    }
+    \def\AND{%
+      \end{tabular}\hfil\linebreak[4]\hfil%
+      \begin{tabular}[t]{c}\bf\rule{\z@}{24\p@}\ignorespaces%
+    }
+    \@author
+   % \begin{tabular}[t]{c}\bf\rule{\z@}{24\p@}\centering\@author\end{tabular}%
+    \vskip 0.3in \@minus 0.1in
+  }
+}
+
+% إضافة إشعار المؤتمر إلى أسفل الصفحة الأولى
+\newcommand{\ftype@noticebox}{8}
+\newcommand{\@notice}{%
+  % إعطاء قليلاً من المساحة الإضافية للمؤلفين على الصفحة الأولى
+  \enlargethispage{2\baselineskip}%
+  \@float{noticebox}[b]%
+    \footnotesize\@noticestring%
+  \end@float%
+}
+
+% تنسيق ملخص البحث
+\renewenvironment{abstract}%
+{%
+\@bottomtitlebar
+  \vskip 0.075in%
+  \centerline%
+  {\large\bf ملخص}%
+  \vspace{0.5ex}%
+  \begin{quote}%
+}
+{
+  \par%
+  \end{quote}%
+  \vskip 1ex%
+  
+}
+
+\newenvironment{keywords}{
+\noindent\textbf{الكلمات الدالة:}
+}
+
+
+% Section Formatting
+\newcommand{\sectionstyle}[1]{\Large\bfseries\textarabic{#1}}
+\newcommand{\subsectionstyle}[1]{\large\bfseries\textarabic{#1}}
+
+% Arabic ArXiv submission notice
+\newcommand{\@noticestring}{%
+  تم تقديم هذا البحث إلى أرشيف العرب 2024.}
+
+
+% fix incompatibilities between lineno and amsmath, if required, by
+% transparently wrapping linenomath environments around amsmath
+% environments
+\AtBeginDocument{%
+  \@ifpackageloaded{amsmath}{%
+    \newcommand*\patchAmsMathEnvironmentForLineno[1]{%
+      \expandafter\let\csname old#1\expandafter\endcsname\csname #1\endcsname
+      \expandafter\let\csname oldend#1\expandafter\endcsname\csname end#1\endcsname
+      \renewenvironment{#1}%
+                      {\linenomath\csname old#1\endcsname}%
+                      {\csname oldend#1\endcsname\endlinenomath}%
+    }%
+    \newcommand*\patchBothAmsMathEnvironmentsForLineno[1]{%
+      \patchAmsMathEnvironmentForLineno{#1}%
+      \patchAmsMathEnvironmentForLineno{#1*}%
+    }%
+    \patchBothAmsMathEnvironmentsForLineno{equation}%
+    \patchBothAmsMathEnvironmentsForLineno{align}%
+    \patchBothAmsMathEnvironmentsForLineno{flalign}%
+    \patchBothAmsMathEnvironmentsForLineno{alignat}%
+    \patchBothAmsMathEnvironmentsForLineno{gather}%
+    \patchBothAmsMathEnvironmentsForLineno{multline}%
+  }
+  {}
+}
+
+\usepackage{caption}
+
+% Translate "Algorithm" keyword to Arabic
+\floatname{algorithm}{الخوارزمية}
+
+\renewcommand{\algorithmicrequire}{\textbf{مطلوب:}}
+\renewcommand{\algorithmicensure}{\textbf{تأكيد:}}
+\renewcommand{\algorithmicwhile}{\textbf{بينما}}
+\renewcommand{\algorithmicdo}{\textbf{قم}}
+\renewcommand{\algorithmicfor}{\textbf{لكل}}
+\renewcommand{\algorithmicforall}{\textbf{لكل}}
+\renewcommand{\algorithmicif}{\textbf{إذا}}
+\renewcommand{\algorithmicthen}{\textbf{ثم}}
+\renewcommand{\algorithmicelse}{\textbf{وإلا}}
+\renewcommand{\algorithmicreturn}{\textbf{ارجع}}
+\renewcommand{\algorithmicfunction}{\textbf{دالة}}
+\renewcommand{\algorithmicprocedure}{\textbf{إجراء}}
+\renewcommand{\algorithmicend}{\textbf{انتهى}}
+\newcommand{\بداية}{\State}
+\newcommand{\إذا}{\If}
+\newcommand{\إذاكان}{\EndIf}
+\newcommand{\وإلا}{\Else}
+\newcommand{\من}{\For}
+\newcommand{\إلى}{\EndFor}
+
+
+\theoremstyle{plain}
+\newtheorem{theorem}{نظرية}
+\newtheorem{principle}{أصل}
+\newtheorem{lemma}{لم}
+\newtheorem{proposition}{اقتراح}
+\theoremstyle{definition}
+\newtheorem{definition}{تعریف}
+\theoremstyle{remark}
+\newtheorem{corollary}{نتيجة}
+\newtheorem{remark}{ملاحظة}
+\newtheorem{example}{مثال}
+
+
+\endinput
